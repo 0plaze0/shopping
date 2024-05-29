@@ -1,8 +1,15 @@
-import React from "react";
+import { SEO } from "../components";
+
+const seo = {
+  title: "About E-commerce",
+  description: "About E-commerce",
+  keywords: "about",
+};
 
 const About = () => {
   return (
     <>
+      <SEO {...seo} />
       <div className="row contactus ">
         <div className="col-md-6 ">
           <img
