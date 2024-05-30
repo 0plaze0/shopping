@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { SEO } from "../../components";
 import { api } from "./../../config/api";
+import "./AuthStyles.css";
 
 const seo = {
   title: "Register",
@@ -42,7 +43,7 @@ const Register = () => {
   return (
     <div>
       <SEO {...seo} />
-      <div className="register">
+      <div className="register form-container">
         <h1>Register</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group d-flex flex-column gap-3">
