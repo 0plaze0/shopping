@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 import { SEO } from "../../components";
+import { api } from "./../../config/api";
 
 const seo = {
   title: "Register",
@@ -16,16 +18,26 @@ const Register = () => {
     phone: "",
     address: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { value, name } = e.target;
     setFormData((preData) => ({ ...preData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    toast.success("Registered Successfully!");
+    try {
+      const response = await api.post("/api/v1/auth/register", { ...formData });
+      console.log(response.data);
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/login");
+      } else toast.error(response.data.message);
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went Wrong!");
+    }
   };
   return (
     <div>
