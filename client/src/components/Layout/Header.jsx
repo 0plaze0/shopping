@@ -1,7 +1,16 @@
 import { Link, NavLink } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
+import { toast } from "react-toastify";
+
+import { useAuth } from "../../context/auth";
 
 const Header = () => {
+  const [auth, setAuth] = useAuth();
+  const handleLogout = () => {
+    setAuth({ ...auth, user: null, token: "" });
+    localStorage.removeItem("auth");
+    toast.success("Logout Successfully");
+  };
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -26,16 +35,28 @@ const Header = () => {
                 Home
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/register">
-                Register
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/login">
-                Login
-              </NavLink>
-            </li>
+            {!auth.user ? (
+              <>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/register">
+                    Register
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/login">
+                    Login
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item" onClick={handleLogout}>
+                  <NavLink className="nav-link" to="/login">
+                    Logut
+                  </NavLink>
+                </li>
+              </>
+            )}
             <li className="nav-item">
               <NavLink className="nav-link" to="/cart">
                 Cart (0)
