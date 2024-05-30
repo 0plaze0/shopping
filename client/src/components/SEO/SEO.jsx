@@ -1,6 +1,11 @@
 import { Helmet } from "react-helmet";
 
-const SEO = ({ title, description, keywords, author }) => {
+const SEO = ({
+  title = "Ecommerce app",
+  description = "Buy Your Favourite Product",
+  keywords = "shopping, buy, discount",
+  author = "akash",
+}) => {
   return (
     <Helmet>
       <meta charSet="UTF-8" />
@@ -10,12 +15,6 @@ const SEO = ({ title, description, keywords, author }) => {
       <title>{title}</title>
     </Helmet>
   );
-};
-
-SEO.defaultProps = {
-  title: "Ecommerce app",
-  description: "Buy Your Favourite Product",
-  keywords: "shopping, buy, discount",
 };
 
 export default SEO;
