@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { SEO } from "../../components";
 import { api } from "./../../config/api";
+import { useAuth } from "../../context/auth";
 
 const seo = {
   title: "login",
@@ -16,6 +17,7 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
+  const [auth, setAuth] = useAuth();
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -30,6 +32,12 @@ const Login = () => {
       if (response.data.success) {
         toast.success(response.data.message);
         navigate("/");
+        setAuth({
+          ...auth,
+          user: response.data.user,
+          token: response.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(response.data));
       } else toast.error(response.data.message);
     } catch (err) {
       console.log(err);
@@ -44,24 +52,22 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group d-flex flex-column gap-3">
             {fields.map((field) => (
-              <>
-                <input
-                  key={`${field}`}
-                  name={`${field}`}
-                  value={`${formData[field]}`}
-                  onChange={(e) => handleChange(e)}
-                  type={
-                    field == "email"
-                      ? "email"
-                      : field == "password"
-                      ? "password"
-                      : "text"
-                  }
-                  className="form-control"
-                  placeholder={`Enter ${field}`}
-                  required
-                />
-              </>
+              <input
+                key={`${field}`}
+                name={`${field}`}
+                value={`${formData[field]}`}
+                onChange={(e) => handleChange(e)}
+                type={
+                  field == "email"
+                    ? "email"
+                    : field == "password"
+                    ? "password"
+                    : "text"
+                }
+                className="form-control"
+                placeholder={`Enter ${field}`}
+                required
+              />
             ))}
           </div>
           <button type="submit" className="btn btn-primary">
