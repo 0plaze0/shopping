@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+
 import { SEO } from "../../components";
 
 const seo = {
@@ -23,6 +25,7 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    toast.success("Registered Successfully!");
   };
   return (
     <div>
