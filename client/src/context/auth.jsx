@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext, createContext } from "react";
+import { api } from "../config/api";
 
 const AuthContext = createContext();
 
@@ -7,6 +8,10 @@ const AuthProvider = ({ children }) => {
     user: null,
     token: "",
   });
+
+  //default send token with every request
+  api.defaults.headers.common["Authorization"] = auth?.token;
+
   useEffect(() => {
     const data = localStorage.getItem("auth");
     if (data) {

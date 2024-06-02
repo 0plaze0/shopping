@@ -28,7 +28,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await api.post("/api/v1/auth/login", { ...formData });
-      console.log(response.data);
+
       if (response.data.success) {
         toast.success(response.data.message);
         navigate("/");

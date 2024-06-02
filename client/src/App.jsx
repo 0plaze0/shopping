@@ -9,7 +9,10 @@ import {
   Contact,
   Register,
   Login,
+  Dashboard,
 } from "./pages";
+
+import { Private } from "./components";
 
 const App = () => {
   return (
@@ -19,6 +22,9 @@ const App = () => {
           <Route index element={<HomePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Private />}>
+            <Route path="" element={<Dashboard />} />
+          </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/policy" element={<Policy />} />
