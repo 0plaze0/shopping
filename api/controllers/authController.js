@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
 import { comparePassword, hashPassword } from "./../utils/authUtils.js";
 
-const requiredField = ["name", "email", "password", "phone", "address"];
 const registerController = async (req, res) => {
+  const requiredField = ["name", "email", "password", "phone", "address"];
   try {
     const { name, email, password, phone, address } = req.body;
     //validation
@@ -90,4 +90,43 @@ const loginController = async (req, res) => {
   }
 };
 
-export default { registerController, loginController };
+const forgotPasswordController = async (req, res) => {
+  const requiredField = ["email", "password", "newPassword"];
+  const { newPassword, email, answer } = req.body;
+  try {
+    for (const field of requiredField) {
+      if (!req.body[field])
+        return res.status(400).send({ error: `${field} is required` });
+    }
+
+    const user = await userModel.findOne({ email, answer });
+
+    if (!user)
+      return res
+        .status(404)
+        .send({ success: false, message: "Wrong Email or Answer" });
+    const hashed = await hashPassword(newPassword);
+
+    const setPassword = await userModel.findByIdAndUpdate(user._id, {
+      password: hashed,
+    });
+
+    res.status(200).send({
+      success: true,
+      message: "Password Reset Successfully",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error while setting forgot password",
+      err,
+    });
+  }
+};
+
+export default {
+  registerController,
+  loginController,
+  forgotPasswordController,
+};
