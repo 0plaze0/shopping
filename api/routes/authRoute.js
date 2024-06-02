@@ -10,7 +10,7 @@ router.route("/login").post(authController.loginController);
 router.get("/user-auth", requireSignIn, (req, res) => {
   res.status(200).send({ ok: true });
 });
-router.post("/forget-password", authController.forgotPasswordController);
+router.post("/forgot-password", authController.forgotPasswordController);
 
 router.route("/test").get(requireSignIn, isAdmin, async (req, res) => {
   return res.send("hello");

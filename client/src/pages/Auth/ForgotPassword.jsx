@@ -7,16 +7,17 @@ import { api } from "./../../config/api";
 import { useAuth } from "../../context/auth";
 
 const seo = {
-  title: "login",
+  title: "Forgot Password",
 };
-const fields = ["email", "password"];
+const fields = ["email", "password", "answer"];
 
-const Login = () => {
+const ForgotPassword = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    answer: "",
   });
-  const [auth, setAuth] = useAuth();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,16 +29,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post("/api/v1/auth/login", { ...formData });
+      const response = await api.post("/api/v1/auth/forgot-password", {
+        email: formData.email,
+        newPassword: formData.password,
+        answer: formData.answer,
+      });
 
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate(location.state || "/");
-        setAuth({
-          ...auth,
-          user: response.data.user,
-          token: response.data.token,
-        });
+
         localStorage.setItem("auth", JSON.stringify(response.data));
       } else toast.error(response.data.message);
     } catch (err) {
@@ -50,10 +50,10 @@ const Login = () => {
     navigate("/forgot-password");
   };
   return (
-    <>
+    <div>
       <SEO {...seo} />
       <div className="register form-container">
-        <h1>Login</h1>
+        <h1>Forgot Password</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group d-flex flex-column gap-3">
             {fields.map((field) => (
@@ -70,25 +70,23 @@ const Login = () => {
                     : "text"
                 }
                 className="form-control"
-                placeholder={`Enter ${field}`}
+                placeholder={
+                  field === "answer"
+                    ? "what's your favourite color?"
+                    : `Enter ${field}`
+                }
                 required
               />
             ))}
           </div>
-          <button
-            type="submit"
-            className="btn btn-primary"
-            onClick={() => handleRedirection()}
-          >
-            Forgot Password
-          </button>
+
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
-export default Login;
+export default ForgotPassword;

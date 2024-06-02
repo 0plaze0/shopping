@@ -9,7 +9,7 @@ import "./AuthStyles.css";
 const seo = {
   title: "Register",
 };
-const fields = ["name", , "phone", "address", "email", "password"];
+const fields = ["name", , "phone", "address", "email", "password", "answer"];
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +18,7 @@ const Register = () => {
     password: "",
     phone: "",
     address: "",
+    answer: "",
   });
   const navigate = useNavigate();
 
@@ -62,7 +63,11 @@ const Register = () => {
                       : "text"
                   }
                   className="form-control"
-                  placeholder={`Enter ${field}`}
+                  placeholder={
+                    field === "answer"
+                      ? "what's your favourite color?"
+                      : `Enter ${field}`
+                  }
                   required
                 />
               </>

@@ -6,3 +6,4 @@ export { default as Policy } from "./Policy";
 export { default as Register } from "./Auth/Register";
 export { default as Login } from "./Auth/Login";
 export { default as Dashboard } from "./User/Dashboard";
+export { default as ForgotPassword } from "./Auth/ForgotPassword";

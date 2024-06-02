@@ -4,9 +4,16 @@ import userModel from "../models/userModel.js";
 import { comparePassword, hashPassword } from "./../utils/authUtils.js";
 
 const registerController = async (req, res) => {
-  const requiredField = ["name", "email", "password", "phone", "address"];
+  const requiredField = [
+    "name",
+    "email",
+    "password",
+    "phone",
+    "address",
+    "answer",
+  ];
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address, answer } = req.body;
     //validation
     for (const field of requiredField) {
       if (!req.body[field])
@@ -29,6 +36,7 @@ const registerController = async (req, res) => {
       password: hashedPassword,
       phone,
       address,
+      answer,
     });
     res.status(201).send({
       success: true,
@@ -91,7 +99,7 @@ const loginController = async (req, res) => {
 };
 
 const forgotPasswordController = async (req, res) => {
-  const requiredField = ["email", "password", "newPassword"];
+  const requiredField = ["email", "newPassword", "answer"];
   const { newPassword, email, answer } = req.body;
   try {
     for (const field of requiredField) {
