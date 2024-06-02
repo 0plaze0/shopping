@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { SEO } from "../../components";
 import { api } from "./../../config/api";
@@ -16,8 +16,9 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
   const [auth, setAuth] = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -31,7 +32,7 @@ const Login = () => {
 
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/");
+        navigate(location.state || "/");
         setAuth({
           ...auth,
           user: response.data.user,
