@@ -10,5 +10,8 @@ router.route("/login").post(authController.loginController);
 router.route("/test").get(requireSignIn, isAdmin, async (req, res) => {
   return res.send("hello");
 });
+router.get("/user-auth", requireSignIn, (req, res) => {
+  res.status(200).send({ ok: true });
+});
 
 export default router;
