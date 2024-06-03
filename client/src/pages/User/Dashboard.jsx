@@ -4,6 +4,7 @@ const Dashboard = () => {
   return (
     <div>
       <SEO title="DashBoard-E-commerce" />
+      <h1>DashBoard</h1>
     </div>
   );
 };
