@@ -11,9 +11,12 @@ import {
   Dashboard,
   ForgotPassword,
   AdminDashboard,
+  CreateCategory,
+  CreateProduct,
+  Users,
 } from "./pages";
 
-import { Layout, Private, AdminRoutes } from "./components";
+import { Layout, Private, AdminRoutes, AdminLayout } from "./components";
 
 const App = () => {
   return (
@@ -27,7 +30,12 @@ const App = () => {
             <Route path="user" element={<Dashboard />} />
           </Route>
           <Route path="/dashboard" element={<AdminRoutes />}>
-            <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin" element={<AdminLayout />}>
+              <Route path="info" element={<AdminDashboard />} />
+              <Route path="create-category" element={<CreateCategory />} />
+              <Route path="create-product" element={<CreateProduct />} />
+              <Route path="users" element={<Users />} />
+            </Route>
           </Route>
 
           <Route path="/login" element={<Login />} />

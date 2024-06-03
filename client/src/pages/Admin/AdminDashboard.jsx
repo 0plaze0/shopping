@@ -1,12 +1,8 @@
 import { SEO } from "./../../components";
+import { AdminMenu } from "./../../components";
 
 const AdminDashboard = () => {
-  return (
-    <>
-      <SEO />
-      <h1>AdminDashboard</h1>
-    </>
-  );
+  return <div>Dashboard</div>;
 };
 
 export default AdminDashboard;
