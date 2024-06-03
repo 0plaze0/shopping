@@ -1,5 +1,7 @@
 export { default as Layout } from "./Layout/Layout";
 export { default as AdminMenu } from "./Layout/AdminMenu";
+export { default as UserLayout } from "./Layout/UserLayout";
+export { default as UserMenu } from "./Layout/UserMenu";
 export { default as AdminLayout } from "./Layout/AdminLayout";
 export { default as SEO } from "./SEO/SEO";
 export { default as Spinner } from "./Spinner";

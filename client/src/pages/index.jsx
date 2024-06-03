@@ -6,6 +6,7 @@ export { default as Policy } from "./Policy";
 export { default as Register } from "./Auth/Register";
 export { default as Login } from "./Auth/Login";
 export { default as Dashboard } from "./User/Dashboard";
+export { default as Order } from "./User/Order";
 export { default as ForgotPassword } from "./Auth/ForgotPassword";
 export { default as AdminDashboard } from "./Admin/AdminDashboard";
 export { default as CreateCategory } from "./Admin/CreateCategory";

@@ -14,9 +14,16 @@ import {
   CreateCategory,
   CreateProduct,
   Users,
+  Order,
 } from "./pages";
 
-import { Layout, Private, AdminRoutes, AdminLayout } from "./components";
+import {
+  Layout,
+  Private,
+  AdminRoutes,
+  AdminLayout,
+  UserLayout,
+} from "./components";
 
 const App = () => {
   return (
@@ -27,7 +34,10 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Private />}>
-            <Route path="user" element={<Dashboard />} />
+            <Route path="user" element={<UserLayout />}>
+              <Route path="profile" element={<Dashboard />} />
+              <Route path="order" element={<Order />} />
+            </Route>
           </Route>
           <Route path="/dashboard" element={<AdminRoutes />}>
             <Route path="admin" element={<AdminLayout />}>
