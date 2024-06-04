@@ -11,5 +11,11 @@ router.post(
   isAdmin,
   categoryRoute.createCategory
 );
+router.put(
+  "/update-category/:id",
+  requireSignIn,
+  isAdmin,
+  categoryRoute.updateCategory
+);
 
 export default router;
