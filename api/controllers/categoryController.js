@@ -58,4 +58,61 @@ const updateCategory = async (req, res) => {
   }
 };
 
-export default { createCategory, updateCategory };
+const getCategory = async (req, res) => {
+  try {
+    const category = await categoryModel.findOne({ slug: req.params.slug });
+    res.status(200).send({
+      success: true,
+      message: "Category Found",
+      category,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error while getting a category",
+    });
+  }
+};
+const getAllCategory = async (req, res) => {
+  try {
+    const category = await categoryModel.find({});
+    res.status(200).send({
+      success: true,
+      message: "All Category",
+      category,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error while getting a category",
+    });
+  }
+};
+const deleteCategory = async (req, res) => {
+  try {
+    const category = await categoryModel.findByIdAndDelete({
+      _id: req.params.id,
+    });
+    res.status(200).send({
+      success: true,
+      message: "Category Deleted Successfully!",
+      category,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error while getting a category",
+    });
+  }
+};
+
+export default {
+  createCategory,
+  updateCategory,
+  getCategory,
+  getAllCategory,
+  deleteCategory,
+};
