@@ -8,5 +8,6 @@ const router = express.Router();
 router
   .route("/create-product")
   .post(requireSignIn, isAdmin, formidable(), productController.createProduct);
-router.get("/get-products", productController.getProduct);
+router.get("/get-products", productController.getAllProduct);
+router.get("/get-products/:slug", productController.getProduct);
 export default router;

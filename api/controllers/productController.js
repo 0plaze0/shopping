@@ -48,10 +48,11 @@ const createProduct = async (req, res) => {
 };
 
 //different api for photo for better performance
-const getProduct = async (req, res) => {
+const getAllProduct = async (req, res) => {
   try {
     const products = await productModel
       .find({})
+      .populate("category")
       .select("-photo")
       .limit(12)
       .sort({ createdAt: -1 });
@@ -71,4 +72,25 @@ const getProduct = async (req, res) => {
   }
 };
 
-export default { createProduct, getProduct };
+const getProduct = async (req, res) => {
+  try {
+    const product = await productModel
+      .findOne({ slug: req.params.slug })
+      .select("-photo")
+      .populate("category");
+    return res.status(200).send({
+      success: true,
+      message: "All Products",
+      product,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error while getting a product",
+      err,
+    });
+  }
+};
+
+export default { createProduct, getAllProduct, getProduct };
