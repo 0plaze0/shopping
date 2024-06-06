@@ -9,14 +9,13 @@ const createProduct = async (req, res) => {
     "description",
     "category",
     "quantity",
-    "shipping",
   ];
   try {
     const { name, price, description, category, quantity } = req.fields;
     const { photo } = req.files;
 
     for (const field of requiredField) {
-      if (!req.field[field])
+      if (!req.fields[field])
         return res.status(400).send({ error: `${field} is required` });
     }
 
@@ -48,4 +47,28 @@ const createProduct = async (req, res) => {
   }
 };
 
-export default { createProduct };
+//different api for photo for better performance
+const getProduct = async (req, res) => {
+  try {
+    const products = await productModel
+      .find({})
+      .select("-photo")
+      .limit(12)
+      .sort({ createdAt: -1 });
+    return res.status(200).send({
+      success: true,
+      countTotal: products.length,
+      message: "All Products",
+      products,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error while getting product",
+      err,
+    });
+  }
+};
+
+export default { createProduct, getProduct };
