@@ -8,6 +8,7 @@ import cors from "cors";
 import { connectDB } from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import categoryRoute from "./routes/categoryRoute.js";
+import productRoute from "./routes/productRoute.js";
 
 //database
 connectDB();
@@ -28,6 +29,7 @@ app.get("/", async (req, res) => {
 //routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/category", categoryRoute);
+app.use("/api/v1/product", productRoute);
 
 //listen
 mongoose.connection.once("open", () => {
