@@ -112,4 +112,23 @@ const productPhoto = async (req, res) => {
   }
 };
 
-export default { createProduct, getAllProduct, getProduct, productPhoto };
+const deleteProduct = async (req, res) => {
+  try {
+    await productModel.findByIdAndDelete(req.params.pid);
+    return res.status(200).send({ message: "Product deleted successfully" });
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      message: "Error while deleting photo",
+      err,
+    });
+  }
+};
+
+export default {
+  createProduct,
+  getAllProduct,
+  getProduct,
+  productPhoto,
+  deleteProduct,
+};
