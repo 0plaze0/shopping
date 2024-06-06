@@ -93,4 +93,23 @@ const getProduct = async (req, res) => {
   }
 };
 
-export default { createProduct, getAllProduct, getProduct };
+const productPhoto = async (req, res) => {
+  try {
+    const productPhoto = await productModel
+      .findById(req.params.pid)
+      .select("photo");
+    console.log(productPhoto);
+    if (productPhoto.photo.data) {
+      res.set("Content-type", productPhoto.photo.contentType);
+    }
+    return res.status(200).send(productPhoto.photo.data);
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      message: "Error while getting photo",
+      err,
+    });
+  }
+};
+
+export default { createProduct, getAllProduct, getProduct, productPhoto };

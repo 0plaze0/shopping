@@ -10,4 +10,5 @@ router
   .post(requireSignIn, isAdmin, formidable(), productController.createProduct);
 router.get("/get-products", productController.getAllProduct);
 router.get("/get-products/:slug", productController.getProduct);
+router.get("/product-photo/:pid", productController.productPhoto);
 export default router;
