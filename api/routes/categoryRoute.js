@@ -34,7 +34,7 @@ router.get(
 );
 
 //delet category
-router.get(
+router.delete(
   "/delete-category/:id",
 
   categoryRoute.deleteCategory

@@ -92,6 +92,7 @@ const getAllCategory = async (req, res) => {
 };
 const deleteCategory = async (req, res) => {
   try {
+    console.log(req.params.id);
     const category = await categoryModel.findByIdAndDelete({
       _id: req.params.id,
     });
