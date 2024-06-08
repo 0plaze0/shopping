@@ -106,3 +106,9 @@
   align-items: center;
   gap: 0.5rem;
 }
+/* product-card */
+
+.product-link {
+  text-decoration: none;
+  color: white;
+}
