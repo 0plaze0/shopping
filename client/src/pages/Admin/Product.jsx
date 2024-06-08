@@ -27,12 +27,9 @@ const Product = () => {
           <Link
             to={`/dashboard/admin/products/${product.slug}`}
             className="product-link"
+            key={product._id}
           >
-            <div
-              className="card mb-1 "
-              style={{ width: "18rem" }}
-              key={product._id}
-            >
+            <div className="card mb-1 " style={{ width: "18rem" }}>
               <img
                 src={`${import.meta.env.VITE_API}api/v1/product/product-photo/${
                   product._id

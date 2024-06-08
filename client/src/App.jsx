@@ -16,6 +16,7 @@ import {
   Users,
   Order,
   Product,
+  UpdateProduct,
 } from "./pages";
 
 import {
@@ -46,6 +47,7 @@ const App = () => {
               <Route path="create-category" element={<CreateCategory />} />
               <Route path="create-product" element={<CreateProduct />} />
               <Route path="products" element={<Product />} />
+              <Route path="products/:slug" element={<UpdateProduct />} />
               <Route path="users" element={<Users />} />
             </Route>
           </Route>
