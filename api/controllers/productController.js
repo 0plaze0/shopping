@@ -64,11 +64,6 @@ const updateProduct = async (req, res) => {
         return res.status(400).send({ error: `${field} is required` });
     }
 
-    if (!photo && photo.size < 1000000)
-      return res
-        .status(400)
-        .send({ error: "Photo is requried and should be less then 1mb" });
-
     const product = await productModel.findByIdAndUpdate(
       req.params.pid,
       { ...req.fields, slug: slugify(name) },
@@ -146,7 +141,7 @@ const productPhoto = async (req, res) => {
     const productPhoto = await productModel
       .findById(req.params.pid)
       .select("photo");
-    console.log(productPhoto);
+
     if (productPhoto.photo.data) {
       res.set("Content-type", productPhoto.photo.contentType);
     }
