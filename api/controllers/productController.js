@@ -168,6 +168,28 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const filterProduct = async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+    let arg = {};
+    if (checked.length > 0) arg.category = checked;
+    if (radio.length) arg.price = { $gte: radio[0], $lte: radio[1] };
+    const product = await productModel.find(arg);
+    res.status(200).send({
+      success: true,
+      message: "Successfully filtered product",
+      product,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error while filtering",
+      err,
+    });
+  }
+};
+
 export default {
   createProduct,
   getAllProduct,
@@ -175,4 +197,5 @@ export default {
   productPhoto,
   deleteProduct,
   updateProduct,
+  filterProduct,
 };

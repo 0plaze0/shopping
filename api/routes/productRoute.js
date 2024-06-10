@@ -15,4 +15,5 @@ router.get("/get-products", productController.getAllProduct);
 router.get("/get-products/:slug", productController.getProduct);
 router.get("/product-photo/:pid", productController.productPhoto);
 router.delete("/delete-product/:pid", productController.deleteProduct);
+router.post("/filter-product", productController.filterProduct);
 export default router;
