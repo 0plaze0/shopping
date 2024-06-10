@@ -189,6 +189,48 @@ const filterProduct = async (req, res) => {
     });
   }
 };
+const productCount = async (req, res) => {
+  try {
+    const total = await productModel.find({}).estimatedDocumentCount();
+    res.status(200).send({
+      success: true,
+      message: "Successfully filtered product",
+      total,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error in product count",
+      err,
+    });
+  }
+};
+const productList = async (req, res) => {
+  try {
+    const perPage = 6;
+    const page = req.params.page ? req.params.page : 1;
+    const product = await productModel
+      .find({})
+      .select("-photo")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+
+    res.status(200).send({
+      success: true,
+      message: "Successfully filtered product",
+      product,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error in product list",
+      err,
+    });
+  }
+};
 
 export default {
   createProduct,
@@ -198,4 +240,6 @@ export default {
   deleteProduct,
   updateProduct,
   filterProduct,
+  productList,
+  productCount,
 };
