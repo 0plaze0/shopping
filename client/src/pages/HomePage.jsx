@@ -11,6 +11,9 @@ const HomePage = () => {
   const [categorires, setCategorires] = useState([]);
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   //get all category
   const getAllCategories = async () => {
@@ -24,19 +27,32 @@ const HomePage = () => {
       toast.error("Something went wrong while getting category");
     }
   };
+  const getTotal = async () => {
+    try {
+      const { data } = await api("/api/v1/product/product-count");
+      if (data) setTotal(data.total);
+    } catch (error) {
+      console.log(error);
+      toast.error("Someting went wrong while getting total product");
+    }
+  };
 
   useEffect(() => {
     getAllCategories();
+    getTotal();
   }, []);
 
   //get all products
   const getAllProducts = async () => {
     try {
-      const { data } = await api("/api/v1/product/get-products");
+      setLoading(true);
+      const { data } = await api.post(`/api/v1/product/product-list/${page}`);
       if (data.success) {
-        setProducts(data.products);
+        setProducts(data.product);
+        setLoading(false);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
       toast.error("Something went wrong");
     }
@@ -44,6 +60,27 @@ const HomePage = () => {
   useEffect(() => {
     if (!checked.length || !radio.length) getAllProducts();
   }, []);
+
+  useEffect(() => {
+    if (page === 1) return;
+    loadmore();
+  }, [page]);
+
+  //load more
+  const loadmore = async () => {
+    try {
+      setLoading(true);
+      const { data } = await api.post(`/api/v1/product/product-list/${page}`);
+      if (data.success) {
+        setProducts([...products, ...data?.product]);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
 
   //filter by category
   const handleFilter = (value, id) => {
@@ -141,6 +178,19 @@ const HomePage = () => {
                   </div>
                 ))}
               </div>
+            </div>
+            <div className="m-2 p-3">
+              {products && products.length < total && (
+                <button
+                  className="btn btn-primary"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage(page + 1);
+                  }}
+                >
+                  {loading ? "...loading" : "Load more"}
+                </button>
+              )}
             </div>
           </div>
         </div>
