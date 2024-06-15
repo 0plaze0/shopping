@@ -17,6 +17,7 @@ import {
   Order,
   Product,
   UpdateProduct,
+  Search,
 } from "./pages";
 
 import {
@@ -35,6 +36,7 @@ const App = () => {
           <Route index element={<HomePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/dashboard" element={<Private />}>
             <Route path="user" element={<UserLayout />}>
               <Route path="profile" element={<Dashboard />} />
