@@ -3,6 +3,7 @@ import { ShoppingCart } from "lucide-react";
 import { toast } from "react-toastify";
 
 import { useAuth } from "../../context/auth";
+import SearchForm from "../Forms/SearchForm";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -28,6 +29,7 @@ const Header = () => {
         >
           <span className="navbar-toggler-icon" />
         </button>
+        <SearchForm />
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">

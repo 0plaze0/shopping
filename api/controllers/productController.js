@@ -236,12 +236,14 @@ const searchProduct = async (req, res) => {
   try {
     const { keyword } = req.params;
 
-    const products = await productModel.find({
-      $or: [
-        { name: { $regex: keyword, options: "i" } },
-        { description: { $regex: keyword, options: "i" } },
-      ],
-    });
+    const products = await productModel
+      .find({
+        $or: [
+          { name: new RegExp(keyword, "i") },
+          { description: new RegExp(keyword, "i") },
+        ],
+      })
+      .select("-photo");
 
     res.status(200).send({
       success: true,
