@@ -18,4 +18,5 @@ router.delete("/delete-product/:pid", productController.deleteProduct);
 router.post("/filter-product", productController.filterProduct);
 router.get("/product-count", productController.productCount);
 router.post("/product-list/:page", productController.productList);
+router.post("/search/:keyword", productController.productList);
 export default router;

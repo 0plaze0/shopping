@@ -232,6 +232,32 @@ const productList = async (req, res) => {
   }
 };
 
+const searchProduct = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+
+    const products = await productModel.find({
+      $or: [
+        { name: { $regex: keyword, options: "i" } },
+        { description: { $regex: keyword, options: "i" } },
+      ],
+    });
+
+    res.status(200).send({
+      success: true,
+      message: "Successfully searched product",
+      products,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      success: false,
+      message: "Error in searching product",
+      err,
+    });
+  }
+};
+
 export default {
   createProduct,
   getAllProduct,
@@ -242,4 +268,5 @@ export default {
   filterProduct,
   productList,
   productCount,
+  searchProduct,
 };
