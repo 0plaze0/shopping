@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 import { SEO, Prices } from "./../components";
 import { api } from "../config/api";
@@ -14,6 +15,7 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   //get all category
   const getAllCategories = async () => {
@@ -168,7 +170,10 @@ const HomePage = () => {
                         {product.description.substring(0, 60)}
                       </p>
                       <p className="card-text">${product.price}</p>
-                      <button className="btn btn-primary ms-1">
+                      <button
+                        className="btn btn-primary ms-1"
+                        onClick={() => navigate(`/product/${product.slug}`)}
+                      >
                         More Details
                       </button>
                       <button className="btn btn-secondary ms-1">

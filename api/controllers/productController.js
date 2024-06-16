@@ -260,6 +260,30 @@ const searchProduct = async (req, res) => {
   }
 };
 
+const relatedProduct = async (req, res) => {
+  const { pid, category } = req.params;
+  console.log(pid, category);
+  try {
+    const product = await productModel
+      .find({
+        category,
+        _id: { $ne: pid },
+      })
+      .select("-photo")
+      .limit(3)
+      .populate("category");
+
+    res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in searching product",
+      err,
+    });
+  }
+};
+
 export default {
   createProduct,
   getAllProduct,
@@ -271,4 +295,5 @@ export default {
   productList,
   productCount,
   searchProduct,
+  relatedProduct,
 };

@@ -4,6 +4,7 @@ export { default as Pagenotfound } from "./Pagenotfound";
 export { default as About } from "./About";
 export { default as Policy } from "./Policy";
 export { default as Search } from "./Search";
+export { default as ProductDetails } from "./ProductDetails";
 export { default as Register } from "./Auth/Register";
 export { default as Login } from "./Auth/Login";
 export { default as ForgotPassword } from "./Auth/ForgotPassword";
