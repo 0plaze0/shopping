@@ -1,12 +1,15 @@
 import { Link, NavLink } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+import { Key, ShoppingCart } from "lucide-react";
 import { toast } from "react-toastify";
 
 import { useAuth } from "../../context/auth";
 import SearchForm from "../Forms/SearchForm";
+import { useCategory } from "../../hooks/useCategory";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  const category = useCategory();
+
   const handleLogout = () => {
     setAuth({ ...auth, user: null, token: "" });
     localStorage.removeItem("auth");
@@ -37,11 +40,32 @@ const Header = () => {
                 Home
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/category">
+            {/* Category */}
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
                 Category
-              </NavLink>
+              </a>
+              <ul className="dropdown-menu">
+                {category?.map((item) => (
+                  <li>
+                    {" "}
+                    <Link
+                      className="dropdown-item"
+                      to={`/category/${item.slug}`}
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </li>
+
+            {/* Admin */}
             {!auth.user ? (
               <>
                 <li className="nav-item">
