@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import fs from "fs";
 import productModel from "../models/productModel.js";
+import categoryModel from "../models/categoryModel.js";
 
 const createProduct = async (req, res) => {
   const requiredField = [
@@ -283,8 +284,32 @@ const relatedProduct = async (req, res) => {
     });
   }
 };
+const productCategory = async (req, res) => {
+  try {
+    const category = await categoryModel.findOne({ slug: req.params.slug });
+    const product = await productModel
+      .find({ category })
+      .select("-photo")
+      .populate("category");
+
+    res.status(200).send({
+      success: true,
+      message: "Successfully fetched product",
+      category,
+      product,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in getting product from catgory",
+      error,
+    });
+  }
+};
 
 export default {
+  productCategory,
   createProduct,
   getAllProduct,
   getProduct,

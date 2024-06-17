@@ -20,4 +20,5 @@ router.get("/product-count", productController.productCount);
 router.post("/product-list/:page", productController.productList);
 router.post("/search/:keyword", productController.searchProduct);
 router.get("/related-product/:pid/:category", productController.relatedProduct);
+router.get("/product-category/:slug", productController.productCategory);
 export default router;

@@ -20,6 +20,7 @@ import {
   Search,
   ProductDetails,
   Category,
+  CategoryProduct,
 } from "./pages";
 
 import {
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />
           <Route path="/category" element={<Category />} />
+          <Route path="/category/:slug" element={<CategoryProduct />} />
           <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/dashboard" element={<Private />}>
             <Route path="user" element={<UserLayout />}>
