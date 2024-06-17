@@ -19,6 +19,7 @@ import {
   UpdateProduct,
   Search,
   ProductDetails,
+  Category,
 } from "./pages";
 
 import {
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/category" element={<Category />} />
           <Route path="/product/:slug" element={<ProductDetails />} />
           <Route path="/dashboard" element={<Private />}>
             <Route path="user" element={<UserLayout />}>
