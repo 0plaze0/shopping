@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { api } from "../config/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const [related, setRelated] = useState([]);
   const { slug } = useParams();
+  const navigate = useNavigate();
 
   const getProduct = async () => {
     try {
@@ -34,7 +35,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     getProduct();
-  }, []);
+  }, [slug]);
 
   return (
     <div>
