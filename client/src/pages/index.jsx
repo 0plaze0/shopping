@@ -18,3 +18,4 @@ export { default as Product } from "./Admin/Product";
 export { default as UpdateProduct } from "./Admin/UpdateProduct";
 export { default as Category } from "./Category";
 export { default as CategoryProduct } from "./CategoryProduct";
+export { default as CartDetails } from "./CartDetails";

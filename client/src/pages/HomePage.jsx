@@ -6,6 +6,7 @@ import { SEO, Prices } from "./../components";
 import { api } from "../config/api";
 
 import { Checkbox, Radio } from "antd";
+import { useCart } from "../context/cart";
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -15,6 +16,7 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [cart, setCart] = useCart();
   const navigate = useNavigate();
 
   //get all category
@@ -104,6 +106,12 @@ const HomePage = () => {
       toast.error("Error while getting category");
     }
   };
+
+  const handleCart = (product) => {
+    setCart([...cart, product]);
+    localStorage.setItem("cart", JSON.stringify([...cart, product]));
+    toast.success("Item added to cart");
+  };
   useEffect(() => {
     if (checked.length || radio.length) filterProduct();
   }, [checked, radio]);
@@ -176,7 +184,12 @@ const HomePage = () => {
                       >
                         More Details
                       </button>
-                      <button className="btn btn-secondary ms-1">
+                      <button
+                        className="btn btn-secondary ms-1"
+                        onClick={() => {
+                          handleCart(product);
+                        }}
+                      >
                         Add to Cart
                       </button>
                     </div>

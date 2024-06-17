@@ -21,6 +21,7 @@ import {
   ProductDetails,
   Category,
   CategoryProduct,
+  CartDetails,
 } from "./pages";
 
 import {
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/cart" element={<CartDetails />} />
           <Route path="/category" element={<Category />} />
           <Route path="/category/:slug" element={<CategoryProduct />} />
           <Route path="/product/:slug" element={<ProductDetails />} />

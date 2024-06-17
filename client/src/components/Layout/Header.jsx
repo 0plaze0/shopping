@@ -1,13 +1,17 @@
 import { Link, NavLink } from "react-router-dom";
 import { Key, ShoppingCart } from "lucide-react";
 import { toast } from "react-toastify";
+import { Badge } from "antd";
 
 import { useAuth } from "../../context/auth";
 import SearchForm from "../Forms/SearchForm";
 import { useCategory } from "../../hooks/useCategory";
+import { useCart } from "./../../context/cart";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  const [cart] = useCart();
+
   const category = useCategory();
 
   const handleLogout = () => {
@@ -118,7 +122,7 @@ const Header = () => {
             )}
             <li className="nav-item">
               <NavLink className="nav-link" to="/cart">
-                Cart (0)
+                <Badge count={cart?.length}>Cart</Badge>
               </NavLink>
             </li>
           </ul>
