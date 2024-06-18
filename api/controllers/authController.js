@@ -134,7 +134,43 @@ const forgotPasswordController = async (req, res) => {
   }
 };
 
+const updateProfile = async (req, res) => {
+  try {
+    const { name, password, email, address, phone } = req.body;
+    const user = await userModel.findById(req.user._id);
+
+    if (password && password.length < 5)
+      return res.status(400).send({
+        success: false,
+        message: "Password length should be greater then 6",
+      });
+
+    const hashPwd = password ? await hashPassword(password) : undefined;
+
+    const updateUser = await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        name: name || user.name,
+        address: address || user.address,
+        phone: phone || user.phone,
+        password: hashPwd || user.password,
+      },
+      {
+        new: true,
+      }
+    );
+    res.status(200).send({
+      success: true,
+      message: "Profile Updated successfully",
+      updateUser,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default {
+  updateProfile,
   registerController,
   loginController,
   forgotPasswordController,

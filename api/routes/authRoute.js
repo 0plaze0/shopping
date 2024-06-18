@@ -16,6 +16,7 @@ router.get("/admin-auth", requireSignIn, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
 router.post("/forgot-password", authController.forgotPasswordController);
+router.put("/update-profile", requireSignIn, authController.updateProfile);
 
 router.route("/test").get(requireSignIn, isAdmin, async (req, res) => {
   return res.send("hello");
