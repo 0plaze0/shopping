@@ -22,6 +22,7 @@ import {
   Category,
   CategoryProduct,
   CartDetails,
+  AdminOrder,
 } from "./pages";
 
 import {
@@ -59,6 +60,7 @@ const App = () => {
               <Route path="products" element={<Product />} />
               <Route path="products/:slug" element={<UpdateProduct />} />
               <Route path="users" element={<Users />} />
+              <Route path="order" element={<AdminOrder />} />
             </Route>
           </Route>
 

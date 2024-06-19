@@ -15,6 +15,7 @@ export { default as CreateCategory } from "./Admin/CreateCategory";
 export { default as CreateProduct } from "./Admin/CreateProduct";
 export { default as Users } from "./Admin/Users";
 export { default as Product } from "./Admin/Product";
+export { default as AdminOrder } from "./Admin/AdminOrder";
 export { default as UpdateProduct } from "./Admin/UpdateProduct";
 export { default as Category } from "./Category";
 export { default as CategoryProduct } from "./CategoryProduct";

@@ -191,10 +191,49 @@ const getOrder = async (req, res) => {
   }
 };
 
+const getAllOrder = async (req, res) => {
+  try {
+    const orders = await orderModel
+      .find({})
+      .populate("products", "-photo")
+      .populate("buyer", "name")
+      .sort({ createdAt: -1 });
+    res.json(orders);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while getting all product",
+      error,
+    });
+  }
+};
+
+const changeStatus = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    const changeStatus = await orderModel.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true }
+    );
+
+    res.status(200).send({ changeStatus });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while changing status",
+      error,
+    });
+  }
+};
+
 export default {
   updateProfile,
   registerController,
   loginController,
   forgotPasswordController,
   getOrder,
+  getAllOrder,
+  changeStatus,
 };
