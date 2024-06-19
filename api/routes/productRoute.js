@@ -21,4 +21,11 @@ router.post("/product-list/:page", productController.productList);
 router.post("/search/:keyword", productController.searchProduct);
 router.get("/related-product/:pid/:category", productController.relatedProduct);
 router.get("/product-category/:slug", productController.productCategory);
+//payment
+router.get("/braintree/token", productController.brainTreeToken);
+router.get(
+  "/braintree/payment",
+  requireSignIn,
+  productController.brainTreePayment
+);
 export default router;
