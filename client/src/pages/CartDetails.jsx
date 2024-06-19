@@ -1,13 +1,53 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { api } from "../config/api";
 import { useAuth } from "../context/auth";
 import { useCart } from "../context/cart";
 import { useNavigate } from "react-router-dom";
+import DropIn from "braintree-web-drop-in-react";
 
 const CartDetails = () => {
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart([]);
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  //payment
+  const getPaymentToken = async () => {
+    try {
+      const { data } = await api("/api/v1/product/braintree/token");
+      if (data) setClientToken(data?.clientToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await api.post("/api/v1/product/braintree/payment/", {
+        nonce,
+        cart,
+      });
+      console.log(data);
+      setLoading(false);
+      localStorage.removeItem("cart");
+      setCart([]);
+      navigate("/dashboard/user/order");
+      toast.success("Payment completed successfully");
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+      toast.error(false);
+    }
+  };
+
+  useEffect(() => {
+    getPaymentToken();
+  }, [auth?.token]);
   const removeItem = (pid) => {
     try {
       const removeItem = cart.filter((item) => item._id != pid);
@@ -118,6 +158,30 @@ const CartDetails = () => {
               Please Login to continue
             </button>
           )}
+          <div className="mt-2">
+            {!clientToken || !cart?.length ? (
+              ""
+            ) : (
+              <>
+                <DropIn
+                  options={{
+                    authorization: clientToken,
+                    paypal: {
+                      flow: "vault",
+                    },
+                  }}
+                  onInstance={(instance) => setInstance(instance)}
+                />
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handlePayment()}
+                  disabled={loading || !instance || !auth?.user?.address}
+                >
+                  {loading ? "Processing..." : "Make Payment"}
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

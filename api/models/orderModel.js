@@ -15,11 +15,11 @@ const orderSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      default: "Not process",
-      enum: ["Not Process", "Processing", "Shipped", "Delivered", "cancel"],
+      default: "Not Process",
+      enum: ["Not Process", "Processing", "Shipped", "Delivered", "Cancel"],
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.default("Order", orderSchema);
+export default mongoose.model("Order", orderSchema);

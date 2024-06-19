@@ -2,10 +2,10 @@ import slugify from "slugify";
 import fs from "fs";
 import productModel from "../models/productModel.js";
 import categoryModel from "../models/categoryModel.js";
-import braintree, { PaymentMethodNonce } from "braintree";
+import braintree from "braintree";
 import orderModel from "../models/orderModel.js";
 
-var gateway = new braintree.BraintreeGateway({
+const gateway = new braintree.BraintreeGateway({
   environment: braintree.Environment.Sandbox,
   merchantId: process.env.BRAINTREE_MERCHANT_ID,
   publicKey: process.env.BRAINTREE_PUBLIC_KEY,
@@ -339,7 +339,7 @@ const brainTreePayment = async (req, res) => {
     let newTransaction = gateway.transaction.sale(
       {
         amount: total,
-        PaymentMethodNonce: nonce,
+        paymentMethodNonce: nonce,
         options: {
           submitForSettlement: true,
         },
@@ -352,7 +352,7 @@ const brainTreePayment = async (req, res) => {
             buyer: req.user._id,
           }).save();
           res.json({ ok: true });
-        }
+        } else res.status(500).json({ error });
       }
     );
   } catch (error) {

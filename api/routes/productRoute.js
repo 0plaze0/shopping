@@ -23,7 +23,7 @@ router.get("/related-product/:pid/:category", productController.relatedProduct);
 router.get("/product-category/:slug", productController.productCategory);
 //payment
 router.get("/braintree/token", productController.brainTreeToken);
-router.get(
+router.post(
   "/braintree/payment",
   requireSignIn,
   productController.brainTreePayment
